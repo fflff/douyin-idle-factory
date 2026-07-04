@@ -1,0 +1,8 @@
+# GitHub 周榜热门项目报告
+
+每周日自动抓取 [GitHub Trending 周榜](https://github.com/trending?since=weekly)，
+生成中文详细介绍，帮助你了解最新火热的开源项目。
+
+## 报告列表
+
+- [2026-07-04](./2026-07-04.md)

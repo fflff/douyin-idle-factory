@@ -1,0 +1,36 @@
+name: Weekly GitHub Trending Report
+
+on:
+  schedule:
+    # Every Sunday 09:00 Beijing time (UTC+8) = 01:00 UTC
+    - cron: "0 1 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements-github-trending.txt
+
+      - name: Generate weekly trending report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/github_trending_weekly.py
+
+      - name: Commit and push report
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: add GitHub weekly trending report"
+          file_pattern: docs/github-trending/**

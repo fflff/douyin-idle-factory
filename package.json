@@ -1,0 +1,9 @@
+{
+  "name": "douyin-idle-factory",
+  "uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "version": "1.0.0",
+  "creator": {
+    "version": "3.8.0"
+  },
+  "description": "摸鱼工厂 - Douyin idle mini game starter (Cocos Creator 3.8)"
+}
