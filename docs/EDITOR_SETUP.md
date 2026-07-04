@@ -104,7 +104,26 @@ UpgradeRow [UpgradeRow]
 - [ ] AppID 已填写
 - [ ] 主包大小 < 4MB（构建面板可查看）
 
-## 8. 常见问题
+## 8. 脚本文件说明（每个文件只能有一个 Component）
+
+| 脚本 | 挂载位置 |
+|------|----------|
+| `GameManager.ts` | GameRoot |
+| `UIManager.ts` | UI 根节点 |
+| `TapButton.ts` | 摸鱼 Button |
+| `AdBoostButton.ts` | 看广告 Button |
+| `UpgradePanel.ts` | UpgradeArea |
+| `UpgradeRow.ts` | UpgradeRow Prefab 根节点 |
+
+## 9. 常见问题
+
+**Q: 脚本报错 `Each script can have at most one Component`**  
+A: Cocos 规定 **一个 .ts 文件只能有一个 `@ccclass` 组件**。若仍报错，菜单 **开发者 → 重新编译脚本**，或关闭项目后删除 `temp/` 再打开。
+
+**Q: 场景一片粉红 / `Bad CPU type in executable`**  
+A: 你的 Mac 是 **Apple Silicon (M 系列)**，但 Cocos 3.8.0 内置工具是 **Intel 版**。任选其一：
+1. **推荐**：Dashboard 改装 **Cocos Creator 3.8.8**（Apple 芯片原生版）
+2. 或：访达 → 应用程序 → 右键 Cocos Creator → **显示简介** → 勾选 **使用 Rosetta 打开**，重启编辑器
 
 **Q: 脚本编译报错找不到 `cc` 模块**  
 A: 必须在 Cocos Creator 内打开项目，编辑器会生成 `temp/declarations/`。

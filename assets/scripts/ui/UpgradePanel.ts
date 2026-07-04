@@ -1,88 +1,10 @@
-import { _decorator, Button, Component, Label, Node, Prefab, instantiate } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate } from 'cc';
 import { GameManager } from '../core/GameManager';
-import { formatCoins } from './UIManager';
+import { UpgradeRow } from './UpgradeRow';
 
 const { ccclass, property } = _decorator;
 
-/**
- * Tap button handler — attach to main "摸鱼" button.
- */
-@ccclass('TapButton')
-export class TapButton extends Component {
-  onTap(): void {
-    GameManager.instance?.onTap();
-  }
-}
-
-/**
- * Rewarded ad button — attach to "看广告双倍" button.
- */
-@ccclass('AdBoostButton')
-export class AdBoostButton extends Component {
-  private _busy = false;
-
-  async onWatchAd(): Promise<void> {
-    if (this._busy) return;
-    this._busy = true;
-    try {
-      await GameManager.instance?.watchAdForBoost();
-    } finally {
-      this._busy = false;
-    }
-  }
-}
-
-/**
- * Single upgrade row. Used by UpgradePanel to populate list.
- */
-@ccclass('UpgradeRow')
-export class UpgradeRow extends Component {
-  @property(Label)
-  nameLabel: Label | null = null;
-
-  @property(Label)
-  descLabel: Label | null = null;
-
-  @property(Label)
-  levelLabel: Label | null = null;
-
-  @property(Label)
-  costLabel: Label | null = null;
-
-  @property(Button)
-  buyButton: Button | null = null;
-
-  private _upgradeId = '';
-
-  setup(
-    id: string,
-    name: string,
-    description: string,
-    level: number,
-    maxLevel: number,
-    cost: number,
-    canPurchase: boolean,
-    onBuy: (id: string) => void,
-  ): void {
-    this._upgradeId = id;
-
-    if (this.nameLabel) this.nameLabel.string = name;
-    if (this.descLabel) this.descLabel.string = description;
-    if (this.levelLabel) this.levelLabel.string = `Lv.${level}/${maxLevel}`;
-    if (this.costLabel) {
-      this.costLabel.string = level >= maxLevel ? '已满级' : formatCoins(cost);
-    }
-    if (this.buyButton) {
-      this.buyButton.interactable = canPurchase;
-      this.buyButton.node.off(Button.EventType.CLICK);
-      this.buyButton.node.on(Button.EventType.CLICK, () => onBuy(id), this);
-    }
-  }
-}
-
-/**
- * Upgrade list panel — wire upgradeRowPrefab and content container in editor.
- */
+/** Upgrade list panel — wire upgradeRowPrefab and content container in editor. */
 @ccclass('UpgradePanel')
 export class UpgradePanel extends Component {
   @property(Prefab)

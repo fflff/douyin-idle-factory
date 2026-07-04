@@ -1,16 +1,9 @@
 import { _decorator, Component, Label } from 'cc';
 import { GameManager } from '../core/GameManager';
 import { GAME_TITLE } from '../config/GameConstants';
+import { formatCoins } from './FormatUtils';
 
 const { ccclass, property } = _decorator;
-
-/** Formats large numbers for mobile UI (e.g. 1.2K, 3.4M). */
-export function formatCoins(value: number): string {
-  if (value < 1000) return Math.floor(value).toString();
-  if (value < 1_000_000) return `${(value / 1000).toFixed(1)}K`;
-  if (value < 1_000_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
-  return `${(value / 1_000_000_000).toFixed(1)}B`;
-}
 
 /**
  * Updates HUD labels: coins, auto rate, boost timer.
